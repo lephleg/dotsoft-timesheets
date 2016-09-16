@@ -17,4 +17,4 @@ Route::get('/', function () {
 });
 
 
-Route::get('users', 'Users@index');
+Route::resource('users', 'Users');

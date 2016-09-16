@@ -31,7 +31,7 @@
         <ul class="sidebar-menu">
             <li class="header">HEADER</li>
             <!-- Optionally, you can add icons to the links -->
-            <li><a href="users"><span>Users</span></a></li>
+            <li class="{{ Request::is('users') ? 'active' : '' }}"><a href="{{ URL::to('users') }}"><span>Users</span></a></li>
             <li><a href="#"><span>Another Link</span></a></li>
             <li class="treeview">
                 <a href="#"><span>Multilevel</span> <i class="fa fa-angle-left pull-right"></i></a>

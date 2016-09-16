@@ -9,14 +9,16 @@ class Users extends Controller
 {
 
     public function index() {
-        $users = User::all();
+        $users = User::where('department', 'DOTSOFT')
+                    ->orderBy('last_name', 'ASC')
+                    ->get();
 
-        return View::make('users', array('pageTitle' => 'Users', 'users' => $users));
+        return View::make('users.index', array('pageTitle' => 'Users', 'users' => $users));
     }
 
-    public function view($id) {
-        $paxtonUser = User::find($id);
-        return response()->json($paxtonUser);
+    public function show($id) {
+        $user = User::find($id);
+        return View::make('users.profile', array('pageTitle' => 'User Profile', 'user' => $user));
     }
 
 

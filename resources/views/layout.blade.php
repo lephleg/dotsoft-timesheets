@@ -14,6 +14,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Ionicons -->
     <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <!-- DataTables -->
+    <link href="{{ asset("adminlte/plugins/datatables/dataTables.bootstrap.css") }}" rel="stylesheet" type="text/css" />
+    <!-- FullCalendar -->
+    <link href="{{ asset("adminlte/plugins/fullcalendar-scheduler/lib/fullcalendar.min.css") }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset("adminlte/plugins/fullcalendar-scheduler/lib/fullcalendar.print.css") }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset("adminlte/plugins/fullcalendar-scheduler/scheduler.min.css") }}" rel="stylesheet" type="text/css" />
+
     <!-- Theme style -->
     <link href="{{ asset("adminlte/dist/css/AdminLTE.min.css")}}" rel="stylesheet" type="text/css" />
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
@@ -75,8 +82,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{ asset ("adminlte/plugins/jQuery/jquery-2.2.3.min.js") }}"></script>
 <!-- Bootstrap 3.3.2 JS -->
 <script src="{{ asset ("adminlte/bootstrap/js/bootstrap.min.js") }}" type="text/javascript"></script>
+<!-- DataTables -->
+<script src="{{ asset ("adminlte/plugins/datatables/jquery.dataTables.min.js") }}" type="text/javascript"></script>
+<script src="{{ asset ("adminlte/plugins/datatables/dataTables.bootstrap.min.js") }}" type="text/javascript"></script>
+<!-- FullCalendar -->
+<script src="{{ asset ("adminlte/plugins/fullcalendar-scheduler/lib/moment.min.js") }}" type="text/javascript"></script>
+<script src="{{ asset ("adminlte/plugins/fullcalendar-scheduler/lib/fullcalendar.min.js") }}" type="text/javascript"></script>
+<script src="{{ asset ("adminlte/plugins/fullcalendar-scheduler/scheduler.min.js") }}" type="text/javascript"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset ("adminlte/dist/js/app.min.js") }}" type="text/javascript"></script>
+<script src="{{ asset ("js/custom.js") }}" type="text/javascript"></script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
       Both of these plugins are recommended to enhance the
