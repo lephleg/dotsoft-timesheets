@@ -41,7 +41,16 @@ function getRainbowColorScheme()
     return $vibgyor;
 }
 
-function compare_dateInterval($interval1, $operator, $interval2)
+/**
+ * Executes comparison between two DateInterval objects
+ *
+ * @param $interval1
+ * @param $operator
+ * @param $interval2
+ *
+ * @return bool|null
+ */
+function compareDateInterval($interval1, $operator, $interval2)
 {
     $interval1_str = $interval1->format("%Y%M%D%H%I%S");
     $interval2_str = $interval2->format("%Y%M%D%H%I%S");
@@ -57,7 +66,15 @@ function compare_dateInterval($interval1, $operator, $interval2)
     }
 }
 
-function add_dateInterval($interval1, $interval2)
+/**
+ * Adds two DateInterval objects
+ *
+ * @param $interval1
+ * @param $interval2
+ *
+ * @return DateInterval
+ */
+function addDateInterval($interval1, $interval2)
 {
     //variables
     $new_value = [];
@@ -73,7 +90,7 @@ function add_dateInterval($interval1, $interval2)
 
     //Set Invert
     if ($operator == '-') {
-        $new_value['invert'] = compare_dateInterval($interval1, ">",
+        $new_value['invert'] = compareDateInterval($interval1, ">",
             $interval2) ? $interval1->invert : $interval2->invert;
     } else {
         $new_value['invert'] = $interval1->invert;
