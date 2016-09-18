@@ -1537,10 +1537,14 @@ ResourceManager = (function(superClass) {
 
   ResourceManager.prototype.fetchResourceInputs = function(callback) {
     var source;
-    source = this.calendar.options['resources'];
+    source = this.calendar.options['resources']['url'];
     if ($.type(source) === 'string') {
       source = {
-        url: source
+        url: source,
+        data: {
+          start: this.calendar.view.start._d.getFullYear()+"-"+('0' + (this.calendar.view.start._d.getMonth()+1)).slice(-2)+"-"+('0' + (this.calendar.view.start._d.getDate())).slice(-2),
+          end: this.calendar.view.end._d.getFullYear()+"-"+('0' + (this.calendar.view.end._d.getMonth()+1)).slice(-2)+"-"+('0' + (this.calendar.view.end._d.getDate())).slice(-2)
+        }
       };
     }
     switch ($.type(source)) {
