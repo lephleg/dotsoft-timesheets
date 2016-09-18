@@ -20,5 +20,5 @@ Route::get('users/daily/{id}', 'Users@daily');
 Route::resource('users', 'Users');
 
 
-Route::get('events/daily', 'Events@dailyEvents');
+Route::get('events/daily', 'Events@dailyEventSets');
 Route::resource('events', 'Events');
