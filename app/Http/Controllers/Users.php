@@ -26,7 +26,7 @@ class Users extends Controller
     {
         $user = User::where('pxt_user_id', $id)->first();
 
-        return response()->json($user->getUserDailySets('2016-09-16'));
+        return response()->json($user->getUserDailyEvents());
 
     }
 

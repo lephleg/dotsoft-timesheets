@@ -34,16 +34,7 @@ class Events extends Controller
                     ->whereBetween('event_time',[$dayBoundaries['start'], $dayBoundaries['end']])
                     ->get();
 
-        foreach ($added_events as $added_event) {
-            $event = new Event();
-            $event->id = null;
-            $event->pxt_event_id = null;
-            $event->device = $added_event->device;
-            $event->direction = $added_event->direction;
-            $event->pxt_user_id = $added_event->pxt_user_id;
-            $event->event_time = $added_event->event_time;
-            $events->push($event);
-        }
+        $allEvents = $events->merge($added_events)->sortBy('event_time');
 
         //setup XOR toggle switch
         $in = 1;
@@ -58,7 +49,7 @@ class Events extends Controller
         }
 
         $sets = [];
-        foreach ($events as $event) {
+        foreach ($allEvents as $event) {
             if ($event->direction == $userRecords[$event->pxt_user_id]['expect']) {
                 $userRecords[$event->pxt_user_id]['expect'] ^= $toggleSwitch;
                 if ($event->direction == 1) {

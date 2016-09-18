@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use DateTime;
 use DateInterval;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -45,16 +46,23 @@ class User extends Authenticatable
      * Retrieves all the main entrance (1172079) events registered to a user
      * for a specific date (default = today)
      *
-*@param null $timestamp
+     * @param null $timestamp
      *
      * @return mixed
      */
     public function getUserDailyEvents($timestamp = null)
     {
         $dayBoundaries = getDayBoundaries($timestamp);
+
         $events = Event::where('pxt_user_id', $this->pxt_user_id)
                     ->where('device',1172079)
                     ->whereBetween('event_time',[$dayBoundaries['start'], $dayBoundaries['end']])
+                    ->whereNotExists(function($query)
+                    {
+                        $query->select(DB::raw(1))
+                            ->from('deleted_events')
+                            ->whereRaw('events.id = deleted_events.event_id');
+                    })
                     ->get();
 
         $added_events = AddedEvent::where('pxt_user_id', $this->pxt_user_id)
@@ -62,77 +70,10 @@ class User extends Authenticatable
             ->whereBetween('event_time',[$dayBoundaries['start'], $dayBoundaries['end']])
             ->get();
 
-        $allEvents = $events->merge($added_events);
+        $allEvents = $events->merge($added_events)->sortBy('event_time');
 
         return $allEvents;
     }
-
-
-    ///**
-    // * Creates and returns all the valid event sets (in-house time)
-    // * (direction = 1 represents an exit, while direction 2 represents an entrance)
-    // * for the day specified (default = today)
-    // * If the user is
-    // * It also returns the total/sum time of all the valid event sets found
-    // *
-    // * @param null $timestamp
-    // *
-    // * @return array ($sets, $total)
-    // *
-    // */
-    //public function getUserDailyEventSets($timestamp = null) {
-    //
-    //    $events = $this->getUserDailyEvents($timestamp);
-    //    $totalEvents = count($events);
-    //
-    //    //setup XOR toggle switch
-    //    $in = 1;
-    //    $out = 2;
-    //    $toggleSwitch = $in ^ $out;
-    //
-    //    $expect = 2;
-    //    $sets = [];
-    //    $previous = null;
-    //    $errors = 0;
-    //    foreach ($events as $index => $event) {
-    //        if ($event->direction == $expect) {
-    //            $expect ^= $toggleSwitch;
-    //            if ($event->direction == 1) {
-    //                $span = array(
-    //                    'id' => $event->id,
-    //                    'resourceId' => $event->pxt_user_id,
-    //                    'start' => $previous,
-    //                    'end'   => $event->event_time,
-    //                    'title' => ($error)?'error!':'OK',
-    //                    'addDay' => ""
-    //                );
-    //                array_push($sets,$span);
-    //
-    //                $error = false;
-    //            }
-    //        } elseif ($index == $totalEvents - 1 && $expect == 1) {
-    //            $expect ^= $toggleSwitch;
-    //            $span = array(
-    //                'id' => $event->id,
-    //                'resourceId' => $event->pxt_user_id,
-    //                'start' => $event->event_time,
-    //                'end'   => new DateTime(),
-    //                'title' => ($error)?'error!':'OK',
-    //                'addDay' => ""
-    //            );
-    //            array_push($sets,$span);
-    //
-    //
-    //            $error = false;
-    //
-    //        } else {
-    //            $error = true;
-    //        }
-    //        $previous = $event->event_time;
-    //    }
-    //
-    //    return ($errors != 0) ? compact('total','errors') : $total;
-    //}
 
     /**
      * Calculates and returns the total time for a specific date (default = today)
