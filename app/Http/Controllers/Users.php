@@ -32,7 +32,7 @@ class Users extends Controller
 
     public function asResources(Request $request)
     {
-        $startParam = $request->query('start');
+        $date = $request->query('start');
 
         $users = User::where('department', 'DOTSOFT')
             ->orderBy('last_name', 'ASC')
@@ -42,11 +42,15 @@ class Users extends Controller
 
         $resources =[];
         foreach ($users as $index => $user) {
-            $total = $user->getUserDailySets($startParam)['total'];
+            $totalObj = $user->getUserDailyTotal($date);
+
+            $error = (gettype($totalObj) == 'array');
+            $total = ($error) ? $totalObj['total'] : $totalObj;
+
             $resource = array(
                 'id' => $user->pxt_user_id,
                 'user' => $user->last_name . ' ' . $user->first_name,
-                'total' => $total->h . "h:" . $total->i . "m",
+                'total' => $total->h . "h:" . $total->i . "m" . (($error) ? " (!)": ""),
                 'eventColor' => $colorCodes[$index % 7]
             );
             array_push($resources, $resource);
