@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AddedEvent;
 use App\Event;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,7 @@ class Events extends Controller
     }
 
 
-    public function dailyEvents(Request $request)
+    public function dailyEventSets(Request $request)
     {
 
         $startParam = $request->query('start');
@@ -28,6 +29,21 @@ class Events extends Controller
         $events = Event::where('device', 1172079)
                     ->whereBetween('event_time',[$dayBoundaries['start'], $dayBoundaries['end']])
                     ->get();
+
+        $added_events = AddedEvent::where('device', 1172079)
+                    ->whereBetween('event_time',[$dayBoundaries['start'], $dayBoundaries['end']])
+                    ->get();
+
+        foreach ($added_events as $added_event) {
+            $event = new Event();
+            $event->id = null;
+            $event->pxt_event_id = null;
+            $event->device = $added_event->device;
+            $event->direction = $added_event->direction;
+            $event->pxt_user_id = $added_event->pxt_user_id;
+            $event->event_time = $added_event->event_time;
+            $events->push($event);
+        }
 
         //setup XOR toggle switch
         $in = 1;
