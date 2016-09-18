@@ -34,25 +34,19 @@ class Users extends Controller
     {
         $startParam = $request->query('start');
 
-        $department = 'dotsoft';
-        if ($department == 'all') {
-            $users = User::orderBy('last_name', 'ASC')
-                ->get();
-        } else {
-            $users = User::where('department', strtoupper($department))
-                ->orderBy('last_name', 'ASC')
-                ->get();
-        }
+        $users = User::where('department', 'DOTSOFT')
+            ->orderBy('last_name', 'ASC')
+            ->get();
 
         $colorCodes = array_values(getRainbowColorScheme());
+
         $resources =[];
         foreach ($users as $index => $user) {
+            $total = $user->getUserDailySets($startParam)['total'];
             $resource = array(
                 'id' => $user->pxt_user_id,
                 'user' => $user->last_name . ' ' . $user->first_name,
-                'total' =>
-                    $user->getUserDailySets($startParam)['total']->h . " hours & " .
-                    $user->getUserDailySets($startParam)['total']->i . " mins",
+                'total' => $total->h . "h:" . $total->i . "m",
                 'eventColor' => $colorCodes[$index % 7]
             );
             array_push($resources, $resource);
