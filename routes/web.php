@@ -1,6 +1,5 @@
 <?php
 
-use View;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,8 +12,13 @@ use View;
 */
 
 Route::get('/', function () {
-    return View::make('home', array('pageTitle' => 'DOTSOFT Timesheets', 'pageDescription' => 'v2'));
+    return view('home', array('pageTitle' => 'DOTSOFT Timesheets', 'pageDescription' => 'v2'));
 });
 
-
+Route::get('users/resources/{date?}', 'Users@asResources');
+Route::get('users/daily/{id}', 'Users@daily');
 Route::resource('users', 'Users');
+
+
+Route::get('events/daily', 'Events@dailyEvents');
+Route::resource('events', 'Events');

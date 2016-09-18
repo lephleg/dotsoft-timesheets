@@ -6,6 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -26,12 +34,5 @@ class Event extends Model
      * @var string
      */
     protected $table = 'events';
-
-    /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
 
 }

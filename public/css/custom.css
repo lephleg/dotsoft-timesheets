@@ -1,7 +1,10 @@
-
-section h1 { font-size: 50px; }
-section body { font: 20px Helvetica, sans-serif; color: #333; }
-section article { display: block; text-align: left; width: 650px; margin: 0 auto; }
-section a { color: #dc8100; text-decoration: none; }
-section a:hover { color: #333; text-decoration: none; }
-section .logo { text-align: center; }
+.fc-event{
+    cursor: pointer;
+}
+.fc-icon-calendar:after{
+    content:"\f073";
+    font-family: FontAwesome;
+    font-weight: 700;
+    font-size: 100%;
+    top: -7%;
+}
