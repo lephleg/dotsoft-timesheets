@@ -20,12 +20,12 @@ $(function () {
     });
 
     $('#dailyDotsoftCalendar').fullCalendar({
-        now: '2016-09-16',
+        // now: '2016-09-16',
         titleFormat: 'dddd, Do MMMM YYYY',
         editable: false,
         aspectRatio: 1.8,
         minTime: '00:00',
-        // maxTime: '21:00',
+        maxTime: '21:00',
         customButtons: {
             myDatepicker: {
                 text: 'custom!',
@@ -56,15 +56,9 @@ $(function () {
             }
         ],
         resources:
-            {
-                url: 'users/resources',
-                data: {
-                    start: '2016-09-16',
-                    end: '2016-09-17'
-                }
-            },
+            { url: 'users/resources' },
         events:
-            { url: '/events/daily'},
+            { url: '/events/daily' },
 
         eventClick: function(calEvent, jsEvent, view) {
             $(this).popover({
