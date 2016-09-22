@@ -23,8 +23,8 @@ $(function () {
         // now: '2016-09-16',
         titleFormat: 'dddd, Do MMMM YYYY',
         editable: false,
-        aspectRatio: 1.8,
-        minTime: '00:00',
+        aspectRatio: 2.5,
+        minTime: '06:00',
         maxTime: '21:00',
         customButtons: {
             myDatepicker: {
@@ -44,6 +44,7 @@ $(function () {
                 duration: { days: 3 }
             }
         },
+        nowIndicator: true,
         resourceAreaWidth: '220px',
         resourceColumns: [
             {
