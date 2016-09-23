@@ -20,7 +20,6 @@ $(function () {
     });
 
     $('#dailyDotsoftCalendar').fullCalendar({
-        // now: '2016-09-16',
         titleFormat: 'dddd, Do MMMM YYYY',
         editable: false,
         aspectRatio: 2.5,
@@ -97,6 +96,15 @@ $(function () {
     $('.fc-today-button').click(function(){
         $('#dailyDotsoftCalendar').fullCalendar('refetchResources');
     });
+
+    setInterval(function(){
+        view = $('#dailyDotsoftCalendar').fullCalendar('getView').start.utcOffset(3);
+        now = moment();
+        if (view.isSame(now,'day')) {
+            $('#dailyDotsoftCalendar').fullCalendar('refetchEvents');
+            $('#dailyDotsoftCalendar').fullCalendar('refetchResources');
+        }
+    },  1*60000);
 
 });
 
