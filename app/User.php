@@ -4,8 +4,6 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use DateTime;
-use DateInterval;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -104,7 +102,7 @@ class User extends Authenticatable
      *
      * @param null $timestamp
      *
-     * @return array|DateInterval
+     * @return array|\DateInterval
      */
     public function getUserDailyTotal($timestamp = null, $existAddedEvents = false) {
 
@@ -119,20 +117,19 @@ class User extends Authenticatable
         $expect = 2;
         $previous = null;
         $errors = 0;
-        $total = new DateInterval('P0Y0DT0H0M0S');
+        $total = new \DateInterval('P0Y0DT0H0M0S');
         foreach ($events as $index => $event) {
             if ($event->direction == $expect) {
                 $expect ^= $toggleSwitch;
                 if ($event->direction == 1) {
-                    $start = new DateTime($previous);
-                    $duration = $start->diff(new DateTime($event->event_time));
+                    $start = new \DateTime($previous);
+                    $duration = $start->diff(new \DateTime($event->event_time));
+                    $total = addDateInterval($total,$duration);
+                } elseif ($index == $totalEvents - 1 && $event->direction == 2) {
+                    $start = new \DateTime($previous);
+                    $duration = $start->diff(new \DateTime($event->event_time, new \DateTimeZone('Europe/Athens')));
                     $total = addDateInterval($total,$duration);
                 }
-            } elseif ($index == $totalEvents - 1 && $expect == 1) {
-                $expect ^= $toggleSwitch;
-                $start = new DateTime($previous);
-                $duration = $start->diff(new DateTime($event->event_time));
-                $total = addDateInterval($total,$duration);
             } else {
                 $errors += 1;
             }

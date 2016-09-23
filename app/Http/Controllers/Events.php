@@ -48,8 +48,9 @@ class Events extends Controller
             $userRecords[$x]['error'] = false;
         }
 
+        $totalEventsCount = count($allEvents);
         $sets = [];
-        foreach ($allEvents as $event) {
+        foreach ($allEvents as $index => $event) {
             if ($event->direction == $userRecords[$event->pxt_user_id]['expect']) {
                 $userRecords[$event->pxt_user_id]['expect'] ^= $toggleSwitch;
                 if ($event->direction == 1) {
@@ -58,6 +59,20 @@ class Events extends Controller
                         'resourceId' => $event->pxt_user_id,
                         'start' => $userRecords[$event->pxt_user_id]['previous'],
                         'end'   => $event->event_time,
+                        'title' => ($userRecords[$event->pxt_user_id]['error'])?'error':'',
+                        'addDay' => ""
+                    );
+                    array_push($sets,$span);
+                    $userRecords[$event->pxt_user_id]['error'] = false;
+                }
+                elseif ($event->direction == 2 && $index == $totalEventsCount - 1)
+                {
+                    $now = new \DateTime('',new \DateTimeZone('Europe/Athens'));
+                    $span = array(
+                        'id' => $event->id,
+                        'resourceId' => $event->pxt_user_id,
+                        'start' => $event->event_time,
+                        'end'   => $now->format('Y-m-d H:i:s'),
                         'title' => ($userRecords[$event->pxt_user_id]['error'])?'error':'',
                         'addDay' => ""
                     );
