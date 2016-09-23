@@ -9,7 +9,9 @@
         "laravel/framework": "5.3.*",
         "almasaeed2010/adminlte": "~2.0",
         "laravelcollective/html": "^5.3",
-        "barryvdh/laravel-debugbar": "^2.2"
+        "barryvdh/laravel-debugbar": "^2.2",
+        "barryvdh/laravel-ide-helper": "^2.2",
+        "doctrine/dbal": "^2.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
