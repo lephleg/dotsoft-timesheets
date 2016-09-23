@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Event;
+use App\AddedEvent;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -38,11 +40,15 @@ class Users extends Controller
             ->orderBy('last_name', 'ASC')
             ->get();
 
+        $dayBoundaries = getDayBoundaries($date);
+        $anyAddedEvent = AddedEvent::whereBetween('event_time',[$dayBoundaries['start'], $dayBoundaries['end']])->first(['id']);
+        $existAddedEvents = !is_null($anyAddedEvent);
+
         $colorCodes = array_values(getRainbowColorScheme());
 
         $resources =[];
         foreach ($users as $index => $user) {
-            $totalObj = $user->getUserDailyTotal($date);
+            $totalObj = $user->getUserDailyTotal($date,$existAddedEvents);
 
             $error = (gettype($totalObj) == 'array');
             $total = ($error) ? $totalObj['total'] : $totalObj;
