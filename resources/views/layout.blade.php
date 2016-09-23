@@ -6,7 +6,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{{ $page_title or "AdminLTE Dashboard" }}</title>
+    <title>{{ $page_title or "Timesheets v2" }}</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.2 -->
     <link href="{{ asset("adminlte/bootstrap/css/bootstrap.min.css") }}" rel="stylesheet" type="text/css" />
@@ -28,7 +28,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect.
     -->
-    <link href="{{ asset("adminlte/dist/css/skins/skin-blue.min.css")}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset("adminlte/dist/css/skins/skin-red.min.css")}}" rel="stylesheet" type="text/css" />
 
     <!-- Custom theming -->
     <link href="{{ asset("css/custom.css") }}" rel="stylesheet" type="text/css" />
@@ -41,7 +41,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="skin-blue sidebar-mini">
+<body class="skin-red sidebar-mini">
 <div class="wrapper">
 
     <!-- Header -->
@@ -55,7 +55,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                {{ $pageTitle or "Page Title" }}
+                {{ $pageTitle or null }}
                 <small>{{ $pageDescription or null }}</small>
             </h1>
             <!-- You can dynamically generate breadcrumbs here -->

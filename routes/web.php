@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('home', array('pageTitle' => 'DOTSOFT Timesheets', 'pageDescription' => 'v2'));
+    return view('home', array('pageTitle' => 'Daily Timesheets'));
 });
 
 Route::get('users/resources/{date?}', 'Users@asResources');
