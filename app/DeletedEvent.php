@@ -4,6 +4,19 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\DeletedEvent
+ *
+ * @property integer $id
+ * @property integer $event_id
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @method static \Illuminate\Database\Query\Builder|\App\DeletedEvent whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\DeletedEvent whereEventId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\DeletedEvent whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\DeletedEvent whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class DeletedEvent extends Model
 {
 

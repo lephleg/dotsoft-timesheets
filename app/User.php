@@ -8,6 +8,25 @@ use DateTime;
 use DateInterval;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * App\User
+ *
+ * @property integer $id
+ * @property integer $pxt_user_id
+ * @property string $first_name
+ * @property string $last_name
+ * @property string $department
+ * @property string $access_level
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $unreadNotifications
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User wherePxtUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereFirstName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereLastName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereDepartment($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereAccessLevel($value)
+ * @mixin \Eloquent
+ */
 class User extends Authenticatable
 {
 
@@ -50,29 +69,32 @@ class User extends Authenticatable
      *
      * @return mixed
      */
-    public function getUserDailyEvents($timestamp = null)
+    public function getUserDailyEvents($timestamp = null, $existAddedEvents = false)
     {
         $dayBoundaries = getDayBoundaries($timestamp);
 
         $events = Event::where('pxt_user_id', $this->pxt_user_id)
-                    ->where('device',1172079)
-                    ->whereBetween('event_time',[$dayBoundaries['start'], $dayBoundaries['end']])
-                    ->whereNotExists(function($query)
-                    {
-                        $query->select(DB::raw(1))
-                            ->from('deleted_events')
-                            ->whereRaw('events.id = deleted_events.event_id');
-                    })
-                    ->get();
-
-        $added_events = AddedEvent::where('pxt_user_id', $this->pxt_user_id)
-            ->where('device', 1172079)
+            ->where('device',1172079)
             ->whereBetween('event_time',[$dayBoundaries['start'], $dayBoundaries['end']])
+            ->whereNotExists(function($query)
+            {
+                $query->select(DB::raw(1))
+                    ->from('deleted_events')
+                    ->whereRaw('events.id = deleted_events.event_id');
+            })
             ->get();
 
-        $allEvents = $events->merge($added_events)->sortBy('event_time');
+        if ($existAddedEvents) {
+            $added_events = AddedEvent::where('pxt_user_id', $this->pxt_user_id)
+                ->where('device', 1172079)
+                ->whereBetween('event_time',[$dayBoundaries['start'], $dayBoundaries['end']])
+                ->get();
+            $allEvents = $events->merge($added_events)->sortBy('event_time');
+            return $allEvents;
+        } else {
+            return $events->sortBy('event_time');
+        }
 
-        return $allEvents;
     }
 
     /**
@@ -84,9 +106,9 @@ class User extends Authenticatable
      *
      * @return array|DateInterval
      */
-    public function getUserDailyTotal($timestamp = null) {
+    public function getUserDailyTotal($timestamp = null, $existAddedEvents = false) {
 
-        $events = $this->getUserDailyEvents($timestamp);
+        $events = $this->getUserDailyEvents($timestamp, $existAddedEvents);
         $totalEvents = count($events);
 
         //setup XOR toggle switch
