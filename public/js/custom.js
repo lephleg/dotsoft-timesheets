@@ -94,6 +94,10 @@ $(function () {
         $('#dailyDotsoftCalendar').fullCalendar('refetchResources');
     });
 
+    $('.fc-today-button').click(function(){
+        $('#dailyDotsoftCalendar').fullCalendar('refetchResources');
+    });
+
 });
 
 
