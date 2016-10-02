@@ -8,3 +8,138 @@
     font-size: 100%;
     top: -7%;
 }
+
+/*.fc-timeline-event {*/
+    /*border-radius: 15px;*/
+/*}*/
+
+.fc-timeline-event .fc-content {
+    overflow: visible;
+}
+
+.fc-content img {
+    margin-left: -8px;
+    z-index: 999;
+}
+
+.main-header .logo {
+    padding:0;
+}
+
+.error-event-full-hint {
+    display: inline-block;
+}
+
+.error-event-full-hint h4 {
+    margin-bottom: 0;
+}
+
+.error-event-brief-hint {
+    display: none;
+}
+
+.after-event-error-hint {
+    margin-right: 5px;
+}
+
+.add-event-button {
+    float: right;
+    margin-right: 35px;
+    z-index: 100;
+}
+
+.error-event {
+    margin-bottom: 20px !important;
+    text-align: center;
+}
+
+@media screen and (max-width: 720px) {
+    .error-event-full-hint,
+    .after-event-error-hint {
+        display: none;
+    }
+
+    .error-event-brief-hint {
+        display: inline-block;
+    }
+}
+.profile-datepicker-button {
+    margin-right: 35px;
+    text-align: right;
+}
+
+.popover-title {
+    text-align: center;
+}
+
+.popover-title>.fa {
+    font-size: 20px;
+}
+
+.event-header {
+    font-size:15px;
+    font-weight: bold;
+}
+
+.timeline-sm {
+    position: relative;
+    /*margin: 0 0 30px 0;*/
+    padding: 0;
+    list-style: none;
+}
+
+.timeline-sm>ul {
+    margin-bottom: 0;
+}
+
+.timeline-sm>li {
+    position: relative;
+    margin-bottom: 5px;
+}
+
+.timeline-sm>li>.fa, .timeline>li>.glyphicon, .timeline>li>.ion {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    line-height: 20px;
+    position: absolute;
+    color: #666;
+    background: #ffffff;
+    border-radius: 50%;
+    text-align: center;
+    top: 0px;
+}
+
+.timeline-sm:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 5px;
+    width: 4px;
+    background: #ddd;
+    left: 8px;
+    margin: 0;
+    border-radius: 2px;
+}
+
+
+.timeline-sm>li>span {
+    margin-left:25px;
+}
+
+.blue-active {
+    color: #005384 !important
+}
+
+.green-active {
+    color: #008d4c !important;
+}
+
+.red-active {
+    color: #d33724 !important;
+}
+
+.name-cell {
+    height: 36px;
+    font-weight:bold;
+}

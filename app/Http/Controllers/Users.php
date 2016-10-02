@@ -18,17 +18,56 @@ class Users extends Controller
         return view('users.index', array('pageTitle' => 'Users', 'users' => $users));
     }
 
-    public function show($id) {
-        $user = User::find($id);
-        return view('users.profile', array('pageTitle' => 'User Profile', 'user' => $user));
+    public function show($id, Request $request) {
+
+        $user = User::where('pxt_user_id',$id)->first();
+
+        if (!is_null($request->query('start')) && !is_null($request->query('end'))) {
+            $startDate = new \DateTime($request->query('start'));
+            $endDate = new \DateTime($request->query('end'));
+        } else {
+            $lastDateString = Event::where('pxt_user_id', $id)
+                ->orderBy('id', 'DESC')
+                ->first(['event_time'])->event_time;
+
+            $endDate = new \DateTime($lastDateString);
+
+            //create last 5 days interval
+            $startDate = clone $endDate;
+            $startDate->sub(new \DateInterval('P4D'));
+        }
+
+        $endDate = $endDate->modify( '+1 day' );
+
+        $interval = \DateInterval::createFromDateString('1 day');
+        $period = new \DatePeriod($startDate, $interval, $endDate);
+        $period = array_reverse(iterator_to_array($period));
+
+        $days = array();
+        foreach ( $period as $dt ) {
+            $events = $user->getUserDailyEvents($dt->format('Y-m-d H:i:s'), true);
+            $days[$dt->format('Y-m-d')] = $events;
+        }
+
+        $pageTitle = 'User Profile';
+
+        //setup XOR toggle switch
+        $in = 1;
+        $out = 2;
+        $toggleSwitch = $in ^ $out;
+
+        return view('users.profile', compact('pageTitle', 'user', 'days', 'toggleSwitch'));
     }
 
 
-    public function daily($id)
+    public function daily($id, Request $request)
     {
+        $date = $request->query('start');
         $user = User::where('pxt_user_id', $id)->first();
 
-        return response()->json($user->getUserDailyEvents());
+        $events = $user->getUserDailyEvents($date, true);
+
+        return response()->json($events);
 
     }
 
@@ -56,7 +95,7 @@ class Users extends Controller
             $resource = array(
                 'id' => $user->pxt_user_id,
                 'user' => $user->last_name . ' ' . $user->first_name,
-                'total' => $total->h . "h:" . $total->i . "m" . (($error) ? " (!)": ""),
+                'total' => $total->h . "h " . $total->i . "m" . (($error) ? " (!)": ""),
                 'eventColor' => $colorCodes[$index % 7]
             );
             array_push($resources, $resource);

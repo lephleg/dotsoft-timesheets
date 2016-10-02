@@ -29,7 +29,7 @@
                                     <td>{{$user->access_level}}</td>
                                     <td class="text-center">
                                         <div class="btn-group">
-                                            <a href="{{ URL::to('/users/'.$user->id) }}" class="btn btn-default btn-sm" onclick="location.href = 'www.yoursite.com';">View</a>
+                                            <a href="{{ URL::to('/users/'.$user->pxt_user_id) }}" class="btn btn-default btn-sm" onclick="location.href = 'timesheets.staging.dotsoft.gr';">View</a>
                                             <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                                 <span class="caret"></span>
                                                 <span class="sr-only">Toggle Dropdown</span>

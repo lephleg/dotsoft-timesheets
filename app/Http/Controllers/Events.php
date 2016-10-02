@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\AddedEvent;
+use App\DeletedEvent;
 use App\Event;
+use Faker\Provider\cs_CZ\DateTime;
 use Illuminate\Http\Request;
 
 class Events extends Controller
@@ -59,8 +61,9 @@ class Events extends Controller
                         'resourceId' => $event->pxt_user_id,
                         'start' => $userRecords[$event->pxt_user_id]['previous'],
                         'end'   => $event->event_time,
-                        'title' => ($userRecords[$event->pxt_user_id]['error'])?'error':'',
+                        'title' => "",
                         'addDay' => ""
+
                     );
                     array_push($sets,$span);
                     $userRecords[$event->pxt_user_id]['error'] = false;
@@ -73,7 +76,7 @@ class Events extends Controller
                         'resourceId' => $event->pxt_user_id,
                         'start' => $event->event_time,
                         'end'   => $now->format('Y-m-d H:i:s'),
-                        'title' => ($userRecords[$event->pxt_user_id]['error'])?'error':'',
+                        'title' => "",
                         'addDay' => ""
                     );
                     array_push($sets,$span);
@@ -81,12 +84,52 @@ class Events extends Controller
                 }
             } else {
                 $userRecords[$event->pxt_user_id]['error'] = true;
+                if ($event->direction == 2) {
+                    //dd('boom');
+                    $fakeStart = new \DateTime($event->event_time);
+                    $fakeStart->sub(new \DateInterval('PT1S'));
+                    $span = array(
+                        'id' => $event->id,
+                        'resourceId' => $event->pxt_user_id,
+                        'start' => $fakeStart->format('Y-m-d H:i:s'),
+                        'end'   => $event->event_time,
+                        'title' => "",
+                        'addDay' => "",
+                        'imageurl' => "img/sign_warning.png"
+                    );
+                } else {
+                    //dd('bam');
+                    $fakeEnd = new \DateTime($event->event_time);
+                    $fakeEnd->add(new \DateInterval('PT1S'));
+                    $span = array(
+                        'id' => $event->id,
+                        'resourceId' => $event->pxt_user_id,
+                        'start' => $event->event_time,
+                        'end'   => $fakeEnd->format('Y-m-d H:i:s'),
+                        'title' => "",
+                        'addDay' => "",
+                        'imageurl' => "img/sign_warning.png"
+                    );
+                }
+                array_push($sets,$span);
             }
             $userRecords[$event->pxt_user_id]['previous'] = $event->event_time;
         }
-
+        //dd($sets);
         return response()->json($sets);
 
     }
 
+
+
+    public function destroy($id) {
+
+        $event = Event::find($id);
+
+        $deletedEvent = new DeletedEvent();
+        $deletedEvent->event_id = $event->id;
+        $deletedEvent->save();
+
+    }
 }
+

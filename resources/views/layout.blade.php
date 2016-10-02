@@ -21,6 +21,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link href="{{ asset("adminlte/plugins/fullcalendar-scheduler/scheduler.min.css") }}" rel="stylesheet" type="text/css" />
     <!-- bootstrap datepicker -->
     <link href="{{ asset("adminlte/plugins/datepicker/datepicker3.css") }}" rel="stylesheet" type="text/css" />
+    <!-- daterange picker -->
+    <link href="{{ asset("adminlte/plugins/daterangepicker/daterangepicker.css") }}" rel="stylesheet" type="text/css" />
 
     <!-- Theme style -->
     <link href="{{ asset("adminlte/dist/css/AdminLTE.min.css")}}" rel="stylesheet" type="text/css" />
@@ -92,6 +94,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{ asset ("adminlte/plugins/fullcalendar-scheduler/scheduler.js") }}" type="text/javascript"></script>
 <!-- bootstrap datepicker -->
 <script src="{{ asset ("adminlte/plugins/datepicker/bootstrap-datepicker.js") }}" type="text/javascript"></script>
+<!-- date-range-picker -->
+<script src="{{ asset ("adminlte/plugins/daterangepicker/moment.min.js") }}" type="text/javascript"></script>
+<script src="{{ asset ("adminlte/plugins/daterangepicker/daterangepicker.js") }}" type="text/javascript"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset ("adminlte/dist/js/app.min.js") }}" type="text/javascript"></script>
 <script src="{{ asset ("js/custom.js") }}" type="text/javascript"></script>

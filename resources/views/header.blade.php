@@ -2,8 +2,7 @@
 <header class="main-header">
 
     <!-- Logo -->
-    {{--<a href="/" class="logo"><img src="{{ asset("img/timesheets-logo-white.png") }}" alt="DOTSOFT Timesheets v2"></a>--}}
-    <a href="/" class="logo"><img src="{{ asset("img/timesheets-logo-white-alpha.png") }}" alt="DOTSOFT Timesheets v2"></a>
+    <a href="/" class="logo"><img src="{{ asset("img/timesheets-logo-white.png") }}" alt="DOTSOFT Timesheets v2"></a>
 
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
