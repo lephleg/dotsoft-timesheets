@@ -23,6 +23,8 @@ $(function () {
         titleFormat: 'dddd, Do MMMM YYYY',
         editable: false,
         // aspectRatio: 2.5,
+        height: 'auto',
+        schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
         minTime: '06:00',
         maxTime: '21:00',
         customButtons: {
