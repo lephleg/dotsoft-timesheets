@@ -41,19 +41,7 @@
                         <li><a href="#settings" data-toggle="tab">Settings</a></li>
                     </ul>
                     <div class="tab-content">
-                        <div class="active tab-pane" id="activity">
-                            <!-- The timeline -->
-                                <div class="profile-datepicker-button">
-                                   {{--<div class="input-group">--}}
-                                    <button type="button" class="btn btn-default" id="daterange-btn">
-                                        <span><i class="fa fa-calendar"></i> Date range picker</span>
-                                        <i class="fa fa-caret-down"></i>
-                                    </button>
-                                   {{--</div>--}}
-                                </div>
-                        @include('users.timeline')
-                        </div>
-                        <!-- /.tab-pane -->
+                        @yield('timeline')
 
                         <div class="tab-pane" id="settings">
                             <form class="form-horizontal">

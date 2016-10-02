@@ -25,6 +25,8 @@ class Users extends Controller
         if (!is_null($request->query('start')) && !is_null($request->query('end'))) {
             $startDate = new \DateTime($request->query('start'));
             $endDate = new \DateTime($request->query('end'));
+
+            $timelineRange = $startDate->format('l jS F') . ' - ' . $endDate->format('l jS F');
         } else {
             $lastDateString = Event::where('pxt_user_id', $id)
                 ->orderBy('id', 'DESC')
@@ -56,7 +58,7 @@ class Users extends Controller
         $out = 2;
         $toggleSwitch = $in ^ $out;
 
-        return view('users.profile', compact('pageTitle', 'user', 'days', 'toggleSwitch'));
+        return view('users.timeline', compact('pageTitle', 'user', 'days', 'toggleSwitch', 'timelineRange'));
     }
 
 
