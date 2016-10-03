@@ -48,9 +48,16 @@ class Events extends Controller
             $userRecords[$x]['expect'] = 2;
             $userRecords[$x]['previous'] = null;
             $userRecords[$x]['error'] = false;
+            $userRecords[$x]['index'] = 0;
         }
 
-        $totalEventsCount = count($allEvents);
+        $userIds = array();
+        foreach ($allEvents as $index => $event) {
+            array_push($userIds,$event->pxt_user_id);
+        }
+
+        $occurences = array_count_values($userIds);
+
         $sets = [];
         foreach ($allEvents as $index => $event) {
             if ($event->direction == $userRecords[$event->pxt_user_id]['expect']) {
@@ -68,7 +75,7 @@ class Events extends Controller
                     array_push($sets,$span);
                     $userRecords[$event->pxt_user_id]['error'] = false;
                 }
-                elseif ($event->direction == 2 && $index == $totalEventsCount - 1)
+                elseif ($event->direction == 2 && ($userRecords[$event->pxt_user_id]['index'] == $occurences[$event->pxt_user_id] - 1) )
                 {
                     $now = new \DateTime('',new \DateTimeZone('Europe/Athens'));
                     $span = array(
@@ -114,6 +121,7 @@ class Events extends Controller
                 array_push($sets,$span);
             }
             $userRecords[$event->pxt_user_id]['previous'] = $event->event_time;
+            $userRecords[$event->pxt_user_id]['index']++;
         }
         //dd($sets);
         return response()->json($sets);
