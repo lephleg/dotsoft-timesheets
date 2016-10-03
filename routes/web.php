@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('home', array('pageTitle' => 'Daily Timesheets'));
 });
 
-Route::get('users/resources/{date?}', 'Users@asResources');
+Route::get('users/resources', 'Users@asResources');
 Route::get('users/daily/{id}', 'Users@daily');
 Route::resource('users', 'Users');
 

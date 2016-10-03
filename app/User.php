@@ -126,9 +126,9 @@ class User extends Authenticatable
                     $duration = $start->diff(new \DateTime($event->event_time));
                     $total = addDateInterval($total,$duration);
                 } elseif ( ($event->direction == 2) && ($index == $totalEvents - 1) ) {
-//                    dd($index);
-                    $start = new \DateTime($previous);
-                    $duration = $start->diff(new \DateTime($event->event_time, new \DateTimeZone('Europe/Athens')));
+                    $start = new \DateTime($event->event_time, new \DateTimeZone('Europe/Athens'));
+                    $now = new \DateTime('', new \DateTimeZone('Europe/Athens'));
+                    $duration = $start->diff($now);
                     $total = addDateInterval($total,$duration);
                 }
             } else {
