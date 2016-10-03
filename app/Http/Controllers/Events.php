@@ -92,7 +92,7 @@ class Events extends Controller
                 $userRecords[$event->pxt_user_id]['error'] = true;
                 if ($event->direction == 2) {
                     $fakeEnd = new \DateTime($userRecords[$event->pxt_user_id]['previous']);
-                    $fakeEnd->add(new \DateInterval('PT1S'));
+                    $fakeEnd->add(new \DateInterval('PT5S'));
                     $span = array(
                         'id' => $event->id,
                         'resourceId' => $event->pxt_user_id,
@@ -105,7 +105,7 @@ class Events extends Controller
                     );
                 } else {
                     $fakeStart = new \DateTime($event->event_time);
-                    $fakeStart->sub(new \DateInterval('PT1S'));
+                    $fakeStart->sub(new \DateInterval('PT5S'));
                     $span = array(
                         'id' => $event->id,
                         'resourceId' => $event->pxt_user_id,

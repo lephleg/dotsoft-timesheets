@@ -19,6 +19,7 @@
 
 .fc-content img {
     margin-left: -8px;
+    margin-top: -3px;
     z-index: 999;
 }
 

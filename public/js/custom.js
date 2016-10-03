@@ -73,6 +73,8 @@ $(function () {
         eventRender: function(event, eventElement) {
             if (event.imageurl) {
                 eventElement.find("div.fc-content").prepend("<img src='" + event.imageurl +"' width='20' height='20'>");
+                event.backgroundColor = 'transparent';
+                event.borderColor = 'transparent';
             }
         },
 
