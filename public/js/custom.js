@@ -53,7 +53,7 @@ $(function () {
                 field: 'user'
             },
             {
-                labelText: 'Total Hours',
+                labelText: 'Total time',
                 field: 'total'
             }
         ],
