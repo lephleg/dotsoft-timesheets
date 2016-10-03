@@ -69,6 +69,17 @@ $(function () {
             var total = $(labelTds[1]).find(".fc-cell-text");
             total.html(resourceObj.total);
             $(labelTds[1]).attr('style', 'text-align: center !important');
+            if (resourceObj.error == true) {
+                total.append( " <i class=\"fa fa-exclamation red-bright color-palette\"></i>" );
+                total.find("i").popover({
+                    html: true,
+                    placement: 'right',
+                    title: '',
+                    content: '<strong>Errors in timeline!</strong><br><small>Beware, this value might differ from reality.</small>',
+                    container: 'body'
+                });
+                total.find("i").css('cursor', 'pointer');
+            }
         },
         eventRender: function(event, eventElement) {
             if (event.imageurl) {
@@ -186,6 +197,10 @@ $(function () {
             $target = $(e.target);
 
         if ($target.hasClass('fc-content') || $target.closest('.fc-timeline-event').length) {
+            return;
+        }
+
+        if ($target.is('i')) {
             return;
         }
 

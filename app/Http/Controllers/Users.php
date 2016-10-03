@@ -97,8 +97,9 @@ class Users extends Controller
             $resource = array(
                 'id' => $user->pxt_user_id,
                 'user' => $user->last_name . ' ' . $user->first_name,
-                'total' => $total->h . "h " . $total->i . "m" . (($error) ? " (!)": ""),
-                'eventColor' => $colorCodes[$index % 7]
+                'total' => $total->h . "h " . $total->i . "m",
+                'eventColor' => $colorCodes[$index % 7],
+                'error' => $error,
             );
             array_push($resources, $resource);
         }
