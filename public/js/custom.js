@@ -78,6 +78,23 @@ $(function () {
 
         eventClick: function(calEvent, jsEvent, view) {
             var duration = moment.duration(calEvent.end.diff(calEvent.start));
+
+            var startIconHtml = '<i class="fa fa-arrow-circle-o-right green-active color-palette"></i>';
+            var startTimeHtml = '<span class="timeline-header"> ' + calEvent.start.format('HH:mm:ss') + '</span>';
+
+            var endIconHtml = '<i class="fa fa-arrow-circle-o-left red-active color-palette"></i>';
+            var endTimeHtml = '<span class="timeline-header"> ' + calEvent.end.format('HH:mm:ss') + '</span>';
+
+            console.log(calEvent.fake);
+            if (calEvent.fake == 'start') {
+                startIconHtml = '<i class="fa fa-times red-bright"></i>';
+                startTimeHtml = '<span class="timeline-header"> No record </span>';
+            }
+            if (calEvent.fake == 'end') {
+                endIconHtml = '<i class="fa fa-times red-bright"></i>';
+                endTimeHtml = '<span class="timeline-header"> No record </span>';
+            }
+
             $(this).popover({
                 html: true,
                 placement: 'top',
@@ -87,12 +104,12 @@ $(function () {
                 content:
                 "<ul class=\"timeline-sm timeline-inverse\">" +
                     "<li>" +
-                        "<i class=\"fa fa-arrow-circle-o-right green-active color-palette\"></i>" +
-                        "<span class=\"timeline-header\"> " + calEvent.start.format('HH:mm:ss') + "</span>" +
+                        startIconHtml +
+                        startTimeHtml +
                     "</li>" +
                     "<li>" +
-                        "<i class=\"fa fa-arrow-circle-o-left red-active color-palette\"></i>" +
-                        "<span class=\"timeline-header\"> " + calEvent.end.format('HH:mm:ss') + "</span>" +
+                        endIconHtml +
+                        endTimeHtml +
                     "</li>" +
                 "</ul>",
                 container: 'body'

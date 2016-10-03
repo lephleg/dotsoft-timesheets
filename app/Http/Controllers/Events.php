@@ -56,7 +56,7 @@ class Events extends Controller
             array_push($userIds,$event->pxt_user_id);
         }
 
-        $occurences = array_count_values($userIds);
+        $occurrences = array_count_values($userIds);
 
         $sets = [];
         foreach ($allEvents as $index => $event) {
@@ -70,12 +70,11 @@ class Events extends Controller
                         'end'   => $event->event_time,
                         'title' => "",
                         'addDay' => ""
-
                     );
                     array_push($sets,$span);
                     $userRecords[$event->pxt_user_id]['error'] = false;
                 }
-                elseif ($event->direction == 2 && ($userRecords[$event->pxt_user_id]['index'] == $occurences[$event->pxt_user_id] - 1) )
+                elseif ($event->direction == 2 && ($userRecords[$event->pxt_user_id]['index'] == $occurrences[$event->pxt_user_id] - 1) )
                 {
                     $now = new \DateTime('',new \DateTimeZone('Europe/Athens'));
                     $span = array(
@@ -92,7 +91,19 @@ class Events extends Controller
             } else {
                 $userRecords[$event->pxt_user_id]['error'] = true;
                 if ($event->direction == 2) {
-                    //dd('boom');
+                    $fakeEnd = new \DateTime($userRecords[$event->pxt_user_id]['previous']);
+                    $fakeEnd->add(new \DateInterval('PT1S'));
+                    $span = array(
+                        'id' => $event->id,
+                        'resourceId' => $event->pxt_user_id,
+                        'start' => $userRecords[$event->pxt_user_id]['previous'],
+                        'end'   => $fakeEnd->format('Y-m-d H:i:s'),
+                        'title' => "",
+                        'addDay' => "",
+                        'imageurl' => "img/sign_warning.png",
+                        'fake'  => "end"
+                    );
+                } else {
                     $fakeStart = new \DateTime($event->event_time);
                     $fakeStart->sub(new \DateInterval('PT1S'));
                     $span = array(
@@ -102,20 +113,8 @@ class Events extends Controller
                         'end'   => $event->event_time,
                         'title' => "",
                         'addDay' => "",
-                        'imageurl' => "img/sign_warning.png"
-                    );
-                } else {
-                    //dd('bam');
-                    $fakeEnd = new \DateTime($event->event_time);
-                    $fakeEnd->add(new \DateInterval('PT1S'));
-                    $span = array(
-                        'id' => $event->id,
-                        'resourceId' => $event->pxt_user_id,
-                        'start' => $event->event_time,
-                        'end'   => $fakeEnd->format('Y-m-d H:i:s'),
-                        'title' => "",
-                        'addDay' => "",
-                        'imageurl' => "img/sign_warning.png"
+                        'imageurl' => "img/sign_warning.png",
+                        'fake'  => "start"
                     );
                 }
                 array_push($sets,$span);

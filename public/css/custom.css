@@ -139,6 +139,14 @@
     color: #d33724 !important;
 }
 
+.red-bright {
+    color: red !important;
+}
+
+.yellow-active {
+    color: #EBBC2F !important;
+}
+
 .name-cell {
     height: 36px;
     font-weight:bold;
