@@ -2,7 +2,7 @@
 @section('timeline')
 <div class="active tab-pane" id="activity">
     <!-- The timeline -->
-    <h3 class="text-center">{{ $timelineRange or 'Latest activity'}}</h3>
+    <h3 class="text-center">{{ $timelineRange or ''}}</h3>
     <div class="profile-datepicker-button">
         <button type="button" class="btn btn-default" id="daterange-btn">
             <span><i class="fa fa-calendar"></i> Pick date range</span>

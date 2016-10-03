@@ -38,7 +38,7 @@
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#activity" data-toggle="tab">Activity</a></li>
-                        <li><a href="#settings" data-toggle="tab">Settings</a></li>
+                        <li><a href="#settings" data-toggle="tab">Details</a></li>
                     </ul>
                     <div class="tab-content">
                         @yield('timeline')
