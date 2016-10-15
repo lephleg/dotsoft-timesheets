@@ -11,13 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home', array('pageTitle' => 'Daily Timesheets'));
+//Route::get('/', 'Home@index')->middleware('auth');
+Route::get('/', 'Home@index');
+
+Route::get('login', function () {
+    return view('login');
 });
 
-Route::get('users/resources', 'Users@asResources');
-Route::get('users/daily/{id}', 'Users@daily');
-Route::resource('users', 'Users');
+
+Route::get('employees/resources', 'Employees@asResources');
+Route::get('employees/daily/{id}', 'Employees@daily');
+
+Route::resource('employees', 'Employees');
 
 
 Route::get('events/daily', 'Events@dailyEventSets');
