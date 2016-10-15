@@ -19,17 +19,17 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($users as $user)
+                            @foreach($employees as $employee)
                                 <tr>
                                     <th scope="row">{{$loop->iteration}}</th>
-                                    <td>{{$user->pxt_user_id}}</td>
-                                    <td>{{$user->last_name}}</td>
-                                    <td>{{$user->first_name}}</td>
-                                    <td>{{$user->department}}</td>
-                                    <td>{{$user->access_level}}</td>
+                                    <td>{{$employee->pxt_user_id}}</td>
+                                    <td>{{$employee->last_name}}</td>
+                                    <td>{{$employee->first_name}}</td>
+                                    <td>{{$employee->department}}</td>
+                                    <td>{{$employee->access_level}}</td>
                                     <td class="text-center">
                                         <div class="btn-group">
-                                            <a href="{{ URL::to('/users/'.$user->pxt_user_id) }}" class="btn btn-default btn-sm" onclick="location.href = 'timesheets.staging.dotsoft.gr';">View</a>
+                                            <a href="{{ URL::to('employees/'.$employee->pxt_user_id) }}" class="btn btn-default btn-sm" onclick="location.href = 'timesheets.staging.dotsoft.gr';">View</a>
                                             <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                                 <span class="caret"></span>
                                                 <span class="sr-only">Toggle Dropdown</span>

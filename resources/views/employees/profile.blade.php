@@ -11,7 +11,7 @@
                         <img class="profile-user-img img-responsive img-circle"
                              src="/adminlte/dist/img/user4-128x128.jpg" alt="User profile picture">
 
-                        <h3 class="profile-username text-center">{{$user->first_name}} {{$user->last_name}}</h3>
+                        <h3 class="profile-username text-center">{{$employee->first_name}} {{$employee->last_name}}</h3>
 
                         <p class="text-muted text-center">Software Engineer</p>
 

@@ -43,38 +43,38 @@ class Events extends Controller
         $out = 2;
         $toggleSwitch = $in ^ $out;
 
-        $userRecords = array();
+        $employeeRecords = array();
         for ($x = 0; $x <= 46; $x++) {
-            $userRecords[$x]['expect'] = 2;
-            $userRecords[$x]['previous'] = null;
-            $userRecords[$x]['error'] = false;
-            $userRecords[$x]['index'] = 0;
+            $employeeRecords[$x]['expect'] = 2;
+            $employeeRecords[$x]['previous'] = null;
+            $employeeRecords[$x]['error'] = false;
+            $employeeRecords[$x]['index'] = 0;
         }
 
-        $userIds = array();
+        $employeeIds = array();
         foreach ($allEvents as $index => $event) {
-            array_push($userIds,$event->pxt_user_id);
+            array_push($employeeIds,$event->pxt_user_id);
         }
 
-        $occurrences = array_count_values($userIds);
+        $occurrences = array_count_values($employeeIds);
 
         $sets = [];
         foreach ($allEvents as $index => $event) {
-            if ($event->direction == $userRecords[$event->pxt_user_id]['expect']) {
-                $userRecords[$event->pxt_user_id]['expect'] ^= $toggleSwitch;
+            if ($event->direction == $employeeRecords[$event->pxt_user_id]['expect']) {
+                $employeeRecords[$event->pxt_user_id]['expect'] ^= $toggleSwitch;
                 if ($event->direction == 1) {
                     $span = array(
                         'id' => $event->id,
                         'resourceId' => $event->pxt_user_id,
-                        'start' => $userRecords[$event->pxt_user_id]['previous'],
+                        'start' => $employeeRecords[$event->pxt_user_id]['previous'],
                         'end'   => $event->event_time,
                         'title' => "",
                         'addDay' => ""
                     );
                     array_push($sets,$span);
-                    $userRecords[$event->pxt_user_id]['error'] = false;
+                    $employeeRecords[$event->pxt_user_id]['error'] = false;
                 }
-                elseif ($event->direction == 2 && ($userRecords[$event->pxt_user_id]['index'] == $occurrences[$event->pxt_user_id] - 1) )
+                elseif ($event->direction == 2 && ($employeeRecords[$event->pxt_user_id]['index'] == $occurrences[$event->pxt_user_id] - 1) )
                 {
                     $now = new \DateTime('',new \DateTimeZone('Europe/Athens'));
                     $span = array(
@@ -86,17 +86,17 @@ class Events extends Controller
                         'addDay' => ""
                     );
                     array_push($sets,$span);
-                    $userRecords[$event->pxt_user_id]['error'] = false;
+                    $employeeRecords[$event->pxt_user_id]['error'] = false;
                 }
             } else {
-                $userRecords[$event->pxt_user_id]['error'] = true;
+                $employeeRecords[$event->pxt_user_id]['error'] = true;
                 if ($event->direction == 2) {
-                    $fakeEnd = new \DateTime($userRecords[$event->pxt_user_id]['previous']);
+                    $fakeEnd = new \DateTime($employeeRecords[$event->pxt_user_id]['previous']);
                     $fakeEnd->add(new \DateInterval('PT5S'));
                     $span = array(
                         'id' => $event->id,
                         'resourceId' => $event->pxt_user_id,
-                        'start' => $userRecords[$event->pxt_user_id]['previous'],
+                        'start' => $employeeRecords[$event->pxt_user_id]['previous'],
                         'end'   => $fakeEnd->format('Y-m-d H:i:s'),
                         'title' => "",
                         'addDay' => "",
@@ -119,8 +119,8 @@ class Events extends Controller
                 }
                 array_push($sets,$span);
             }
-            $userRecords[$event->pxt_user_id]['previous'] = $event->event_time;
-            $userRecords[$event->pxt_user_id]['index']++;
+            $employeeRecords[$event->pxt_user_id]['previous'] = $event->event_time;
+            $employeeRecords[$event->pxt_user_id]['index']++;
         }
         //dd($sets);
         return response()->json($sets);

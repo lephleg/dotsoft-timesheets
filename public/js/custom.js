@@ -3,8 +3,8 @@
  */
 
 $(function () {
-    // $("#users").DataTable();
-    $('#users').DataTable({
+    // $("#employees").DataTable();
+    $('#employees').DataTable({
         "paging": false,
         "lengthChange": true,
         "searching": true,
@@ -49,8 +49,8 @@ $(function () {
         resourceAreaWidth: '220px',
         resourceColumns: [
             {
-                labelText: 'User',
-                field: 'user'
+                labelText: 'Employee',
+                field: 'employee'
             },
             {
                 labelText: 'Total time',
@@ -58,13 +58,13 @@ $(function () {
             }
         ],
         resources:
-            { url: 'users/resources' },
+            { url: 'employees/resources' },
         events:
             { url: '/events/daily' },
 
         resourceRender: function(resourceObj, labelTds, bodyTds) {
             var name = $(labelTds[0]).find(".fc-cell-text");
-            name.html('<strong><a href="users/' + resourceObj.id + '">' + resourceObj.user + '</a></strong>');
+            name.html('<strong><a href="employees/' + resourceObj.id + '">' + resourceObj.user + '</a></strong>');
 
             var total = $(labelTds[1]).find(".fc-cell-text");
             total.html(resourceObj.total);

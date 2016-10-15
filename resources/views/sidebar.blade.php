@@ -31,8 +31,8 @@
         <ul class="sidebar-menu">
             <li class="header text-center">MANAGEMENT</li>
             <!-- Optionally, you can add icons to the links -->
-            <li class="{{ Request::is('users') ? 'active' : '' }}"><a href="{{ URL::to('users') }}"><i
-                            class="fa fa-users"></i> <span>Users</span></a></li>
+            <li class="{{ Request::is('employees') ? 'active' : '' }}"><a href="{{ URL::to('employees') }}"><i
+                            class="fa fa-users"></i> <span>Employees</span></a></li>
         </ul><!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->

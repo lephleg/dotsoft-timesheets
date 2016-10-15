@@ -1,4 +1,4 @@
-@extends('users.profile')
+@extends('employees.profile')
 @section('timeline')
 <div class="active tab-pane" id="activity">
     <!-- The timeline -->
@@ -29,10 +29,10 @@
                         <i class="fa fa-exclamation-triangle bg-yellow"></i>
                         <span class="error-event-full-hint">
                                 @if ($expect == 1)
-                                <h4>Some kind of evil sorcery teleported <strong>{{$user->first_name}}</strong> out of the office!</h4>
+                                <h4>Some kind of evil sorcery teleported <strong>{{$employee->first_name}}</strong> out of the office!</h4>
                                 ..or maybe an exit event is missing?
                             @else
-                                <h4>Is <strong>{{$user->first_name}}</strong> climbing through the windows?</h4>
+                                <h4>Is <strong>{{$employee->first_name}}</strong> climbing through the windows?</h4>
                                 Let's just assume an event is missing...
                             @endif
                         </span>
