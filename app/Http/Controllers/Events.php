@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\AddedEvent;
 use App\DeletedEvent;
+use App\Employee;
 use App\Event;
 use Faker\Provider\cs_CZ\DateTime;
 use Illuminate\Http\Request;
@@ -44,7 +45,7 @@ class Events extends Controller
         $toggleSwitch = $in ^ $out;
 
         $employeeRecords = array();
-        for ($x = 0; $x <= 46; $x++) {
+        for ($x = 1; $x <= Employee::count(); $x++) {
             $employeeRecords[$x]['expect'] = 2;
             $employeeRecords[$x]['previous'] = null;
             $employeeRecords[$x]['error'] = false;
