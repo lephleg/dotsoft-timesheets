@@ -13,7 +13,7 @@ class Home extends Controller {
     public function index() {
 
 
-        return view('home', array('pageTitle' => 'Daily Timesheets'));
+        return view('home', array('pageTitle' => null));
     }
 
 
