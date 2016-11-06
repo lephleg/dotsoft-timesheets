@@ -1,0 +1,9 @@
+timesheets:
+  build: .
+  container_name: timesheets
+  hostname: timesheets.staging.dotsoft.gr
+  volumes:
+    - /src:/var/www/html
+  environment:
+    - VIRTUAL_HOST=timesheets.staging.dotsoft.gr
+    - TERM=xterm
