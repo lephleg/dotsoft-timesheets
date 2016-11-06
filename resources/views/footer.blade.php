@@ -1,8 +1,11 @@
-<footer class="main-footer">
+<footer class="main-footer ">
     <!-- To the right -->
     <div class="pull-right hidden-xs">
-        Anything you want
+    <strong>Copyright © 2016 <a href="http://www.dotsoft.gr">DOTSOFT S.A.</a></strong>
     </div>
     <!-- Default to the left -->
-    <strong>Copyright © 2015 <a href="#">Company</a>.</strong> All rights reserved.
+    <!-- got really bored -->
+    <span style="color:#fff;">
+        null
+    </span>
 </footer>
