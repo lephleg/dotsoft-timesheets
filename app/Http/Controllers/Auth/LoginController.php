@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\MessageBag;
 
 class LoginController extends Controller
 {
@@ -46,17 +47,18 @@ class LoginController extends Controller
         return 'username';
     }
 
-    public function showLogin() {
-
+    public function showLogin()
+    {
         return view('login');
     }
 
-    public function login() {
+    public function login()
+    {
 
         // validate the info, create rules for the inputs
         $rules = array(
-            'username'    => 'required',
-            'password' => 'required|min:6' // password can only be alphanumeric and has to be greater than 6 characters
+            'username'  => 'required',
+            'password'  => 'required|min:6' // password can only be alphanumeric and has to be greater than 6 characters
         );
 
         // run the validation rules on the inputs from the form
@@ -64,7 +66,7 @@ class LoginController extends Controller
 
         // if the validator fails, redirect back to the form
         if ($validator->fails()) {
-            return Redirect::to('login')
+            return view('login')
                 ->withErrors($validator) // send back all errors to the login form
                 ->withInput(Input::except('password')); // send back the input (not the password) so that we can repopulate the form
         } else {
@@ -83,9 +85,13 @@ class LoginController extends Controller
                  return Redirect::to('/');
 
             } else {
+                // if Auth::attempt fails (wrong credentials) create a new message bag instance.
+                $errors = new MessageBag(['password' => ['Wrong credentials. Access denied.']]);
 
                 // validation not successful, send back to form
-                return Redirect::to('login');
+                return Redirect::to('login')
+                    ->withErrors($errors)
+                    ->withInput(Input::except('password'));
 
             }
         }
