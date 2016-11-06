@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDeletedEventsTable extends Migration
+class CreateUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,14 @@ class CreateDeletedEventsTable extends Migration
      */
     public function up()
     {
-        Schema::create('deleted_events', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('event_id');
+            $table->string('username')->unique();
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
-
-            $table->foreign('event_id')
-                ->references('pxt_event_id')
-                ->on('events');
         });
     }
-
     /**
      * Reverse the migrations.
      *
@@ -31,6 +28,6 @@ class CreateDeletedEventsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('deleted_events');
+        Schema::dropIfExists('users');
     }
 }
