@@ -7,7 +7,7 @@ class UsersTableSeeder extends Seeder {
 
     public function run()
     {
-        DB::table('users')->delete();
+        DB::table('users')->truncate();
 
         $legitUser = new \App\User;
         $legitUser->username = 'admin';
