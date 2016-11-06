@@ -8,7 +8,6 @@ services:
     volumes:
       - ./src:/var/www/html
     environment:
-     - TERM=xterm
      - VIRTUAL_HOST=timesheets.staging.dotsoft.gr
     restart: unless-stopped
 
