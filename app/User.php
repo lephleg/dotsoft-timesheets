@@ -11,13 +11,6 @@ class User extends Authenticatable
     use Notifiable;
 
     /**
-     * Indicates if the model should be timestamped.
-     *
-     * @var bool
-     */
-    public $timestamps = false;
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -30,13 +23,6 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [];
-
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'users';
 
 
 }
