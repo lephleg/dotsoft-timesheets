@@ -12,11 +12,12 @@
 */
 
 //Route::get('/', 'Home@index')->middleware('auth');
-Route::get('/', 'Home@index');
+Route::get('/', 'Home@index')->middleware('auth');;
 
-Route::get('login', function () {
-    return view('login');
-});
+Route::get('login', array('uses' => 'Auth\LoginController@showLogin'));
+Route::post('login', array('uses' => 'Auth\LoginController@login'));
+Route::post('logout', array('uses' => 'Auth\LoginController@logout'));
+
 
 
 Route::get('employees/resources', 'Employees@asResources');

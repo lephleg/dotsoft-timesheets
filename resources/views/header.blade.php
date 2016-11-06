@@ -139,7 +139,11 @@
                                 <a href="#" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
-                                <a href="#" class="btn btn-default btn-flat">Sign out</a>
+
+                                <form method="POST" action="logout" accept-charset="UTF-8" name="logout-form" id="logout-form">
+                                    {{ csrf_field() }}
+                                    <button class="btn btn-default btn-flat" type="submit">Sign out</button>
+                                </form>
                             </div>
                         </li>
                     </ul>
