@@ -8,8 +8,8 @@ echo "Changed directory to docroot."
 
 composer install
 
-chmod -R 775 /var/www/html/storage
-chmod -R 775 /var/www/html/public
+chmod -R 777 /var/www/html/storage
+chmod -R 777 /var/www/html/public
 echo "Configured permissions to storage and public directories."
 
 php artisan migrate --seed

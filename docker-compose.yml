@@ -1,9 +1,18 @@
-timesheets:
-  build: .
-  container_name: timesheets
-  hostname: timesheets.staging.dotsoft.gr
-  volumes:
-    - ./src:/var/www/html
-  environment:
-    - VIRTUAL_HOST=timesheets.staging.dotsoft.gr
-    - TERM=xterm
+version: '2'
+
+services:
+  timesheets:
+    build: .
+    container_name: timesheets
+    hostname: timesheets.staging.dotsoft.gr
+    volumes:
+      - ./src:/var/www/html
+    environment:
+     - TERM=xterm
+     - VIRTUAL_HOST=timesheets.staging.dotsoft.gr
+    restart: unless-stopped
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
