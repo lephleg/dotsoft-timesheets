@@ -38,7 +38,7 @@ ADD resources/.env /tmp/resources/.env
 # Install supervisor
 RUN apt-get install -y supervisor
 RUN mkdir -p /var/log/supervisor
-ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+ADD resources/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Add entrypoint script and make it executable
 ADD resources/entrypoint.sh /tmp/resources/entrypoint.sh
