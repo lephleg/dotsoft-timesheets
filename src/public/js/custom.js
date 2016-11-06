@@ -50,11 +50,13 @@ $(function () {
         resourceColumns: [
             {
                 labelText: 'Employee',
-                field: 'employee'
+                field: 'employee',
+                width: '140px'
             },
             {
                 labelText: 'Total time',
-                field: 'total'
+                field: 'total',
+                width: '80px'
             }
         ],
         resources:
