@@ -12,7 +12,7 @@ RUN apt install -y --force-yes php5.6 libapache2-mod-php5.6 php5.6-curl php5.6-g
 # Install supervisor
 RUN apt-get install -y supervisor
 RUN mkdir -p /var/log/supervisor
-ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+ADD resources/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Configure apache
 ENV APACHE_RUN_USER www-data
