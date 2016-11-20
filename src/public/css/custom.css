@@ -152,3 +152,7 @@
     height: 36px;
     font-weight:bold;
 }
+
+#monthlyDotsoftCalendar .fc-toolbar h2 {
+    font-weight: bold;
+}
