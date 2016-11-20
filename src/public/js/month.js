@@ -58,6 +58,9 @@ $(function () {
     });
 
     $('.fc-myMonthDatepicker-button').datepicker({
+        format: "mm-yyyy",
+        startView: "months",
+        minViewMode: "months",
         autoclose: true
     })
         .on('changeDate', function(e) {
