@@ -31,7 +31,7 @@ $(function () {
                 duration: { months: 1 }
             }
         },
-        resourceAreaWidth: '220px',
+        resourceAreaWidth: '240px',
         resourceColumns: [
             {
                 labelText: 'Employee',
@@ -41,7 +41,7 @@ $(function () {
             {
                 labelText: 'Average time',
                 field: 'average',
-                width: '80px'
+                width: '100px'
             }
         ],
         resources:
