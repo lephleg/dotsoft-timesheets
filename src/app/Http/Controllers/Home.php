@@ -16,6 +16,11 @@ class Home extends Controller {
         return view('home', array('pageTitle' => null));
     }
 
+    public function month() {
+
+
+        return view('month', array('pageTitle' => null));
+    }
 
 
 

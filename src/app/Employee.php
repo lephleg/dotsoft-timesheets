@@ -111,7 +111,9 @@ class Employee extends Model
         $expect = 2;
         $previous = null;
         $errors = 0;
-        $total = new \DateInterval('P0Y0DT0H0M0S');
+        $total = new \DateIntervalEnhanced('P0Y0DT0H0M0S');
+        $endOfDay = new \DateTime($timestamp, new \DateTimeZone('Europe/Athens'));
+        $endOfDay->setTime(23, 59,59);
         foreach ($events as $index => $event) {
             if ($event->direction == $expect) {
                 $expect ^= $toggleSwitch;
@@ -122,6 +124,11 @@ class Employee extends Model
                 } elseif ( ($event->direction == 2) && ($index == $totalEvents - 1) ) {
                     $start = new \DateTime($event->event_time, new \DateTimeZone('Europe/Athens'));
                     $now = new \DateTime('', new \DateTimeZone('Europe/Athens'));
+                    // if this is not viewed the same day there is an error here (the guy never exited)
+                    if ($now->getTimestamp() > $endOfDay->getTimestamp()) {
+                        $now = $endOfDay;
+                        $errors += 1;
+                    }
                     $duration = $start->diff($now);
                     $total = addDateInterval($total,$duration);
                 }
@@ -133,6 +140,62 @@ class Employee extends Model
 
         return ($errors != 0) ? compact('total','errors') : $total;
 
+    }
+
+    public function getEmployeeDailyTotalDb($date) {
+
+        $dailyTime = DailyLookup::where('pxt_user_id', $this->pxt_user_id)
+                            ->where('date', $date)
+                            ->value('minutes');
+        return $dailyTime;
+    }
+
+
+    public function getMonthAverage($month, $year)
+    {
+        $num = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+        $days = 0;
+
+        $average = [];
+        $reset = \DateTime::createFromFormat('Y-m-d H:i:s', $year.'-'.$month.'-01 00:00:00');
+        $total = clone $reset;
+        // for each day of this month
+        for ($i = 0; $i < $num; $i++)
+        {
+            $day = $year.'-'.$month.'-'.($i+1);
+            $minutes = $this->getEmployeeDailyTotalDb($day);
+
+            if (is_null($minutes)) {
+                continue;
+            }
+
+            if ($minutes > 0) {
+                $days++;
+            }
+
+            $enhancedDayTotalInterval = new \DateIntervalEnhanced('PT0H'.$minutes.'M0S');
+            $total->add($enhancedDayTotalInterval);
+        }
+
+        if (!$days > 0) {
+            $average['days'] = 0;
+            $average['hours'] = 0;
+            $average['minutes'] = 0;
+            $average['seconds'] = 0;
+        } else {
+            $totalInterval = $total->diff($reset);
+            $enhancedInterval = new \DateIntervalEnhanced('P'.$totalInterval->d.'DT'.$totalInterval->h.'H'.$totalInterval->m.'M'.$totalInterval->s.'S');
+
+            $averageInterval = new \DateIntervalEnhanced("PT" . round($enhancedInterval->to_seconds()/$days) . "S");
+            $averageInterval->recalculate();
+
+            $average['days'] = $averageInterval->d;
+            $average['hours'] = $averageInterval->h;
+            $average['minutes'] = $averageInterval->i;
+            $average['seconds'] = $averageInterval->s;
+        }
+
+        return $average;
     }
 
 }

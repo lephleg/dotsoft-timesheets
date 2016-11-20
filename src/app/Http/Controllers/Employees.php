@@ -73,7 +73,48 @@ class Employees extends Controller
 
     }
 
-    public function asResources(Request $request)
+    public function monthAverage($id, Request $request) {
+
+        $month = $request->query('month');
+        $year = $request->query('year');
+        $employee = Employee::where('pxt_user_id', $id)->first();
+
+        $average = $employee->getMonthAverage($id, $month, $year);
+
+        $output['id'] = $employee->pxt_user_id;
+        $output['name'] = $employee->last_name . ' ' . $employee->first_name;
+        $output['average'] = $average['hours'] . 'h ' . $average['minutes'] . 'm';
+
+        return json_encode($output);
+    }
+
+
+
+    public function asMonthlyResources(Request $request)
+    {
+        $dateString = $request->query('start');
+        $date = \DateTime::createFromFormat('Y-m-d', $dateString);
+
+        $employees = Employee::where('department', 'DOTSOFT')
+            ->orderBy('last_name', 'ASC')
+            ->get();
+
+        $resources =[];
+
+        foreach ($employees as $index => $employee) {
+            $average = $employee->getMonthAverage($date->format('m'), $date->format('y'));
+
+            $output['id']   = $employee->pxt_user_id;
+            $output['name'] = $employee->last_name . ' ' . $employee->first_name;
+            $output['average'] = $average['hours'] . 'h ' . $average['minutes'] . 'm';
+            array_push($resources, $output);
+        }
+
+        return response()->json($resources);
+    }
+
+
+    public function asDailyResources(Request $request)
     {
         $date = $request->query('start');
 

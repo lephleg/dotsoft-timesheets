@@ -60,7 +60,7 @@ $(function () {
             }
         ],
         resources:
-            { url: 'employees/resources' },
+            { url: 'employees/daily-resources' },
         events:
             { url: '/events/daily' },
 

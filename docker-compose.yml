@@ -10,8 +10,5 @@ services:
     environment:
      - VIRTUAL_HOST=timesheets.staging.dotsoft.gr
     restart: unless-stopped
-
-networks:
-  default:
-    external:
-      name: nginx-proxy
+    ports:
+     - "80:80"

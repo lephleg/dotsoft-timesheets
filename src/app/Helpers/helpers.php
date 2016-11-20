@@ -22,6 +22,27 @@ function getDayBoundaries($timestamp = null)
 }
 
 /**
+ * Returns a dates timestamp boundaries (e.g. 2000-01-01 00:00:00 and 2000-01-31 23:59:59)
+ *
+ * @param null $timestamp
+ *
+ * @return array
+ */
+
+function getMonthBoundaries($timestamp = null)
+{
+
+    if ( ! $timestamp) {
+        $timestamp = date("Y-m-d H:i:s");
+    }
+
+    $start = (new DateTime($timestamp))->format('Y-m-01 00:00:00');
+    $end   = (new DateTime($timestamp))->format('Y-m-t 23:59:59');
+
+    return compact('start', 'end');
+}
+
+/**
  * Return color hex values for the VIBGYOR rainbow scheme
  *
  * @return array
@@ -114,9 +135,44 @@ function addDateInterval($interval1, $interval2)
     }
 
     $nv             = $new_value;
-    $result         = new DateInterval("P$nv[y]Y$nv[m]M$nv[d]DT$nv[h]H$nv[i]M$nv[s]S");
+    $result         = new DateIntervalEnhanced("P$nv[y]Y$nv[m]M$nv[d]DT$nv[h]H$nv[i]M$nv[s]S");
     $result->invert = $new_value['invert'];
 
     return $result;
 }
 
+class DateIntervalEnhanced extends DateInterval {
+
+    public function recalculate()
+    {
+        $from = new DateTime('@0');
+        $to = clone $from;
+        $to->add($this);
+        $diff = $from->diff($to);
+        foreach ($diff as $k => $v) $this->$k = $v;
+        return $this;
+    }
+    function to_minutes()
+    {
+        $seconds = ($this->s > 0) ? ($this->s / 60) : 0;
+
+        return ($this->y * 365 * 24 * 60) +
+        ($this->m * 30 * 24 * 60) +
+        ($this->d * 24 * 60) +
+        ($this->h * 60) +
+        ($this->i) +
+        $seconds
+        ;
+    }
+
+    function to_seconds()
+    {
+        return ($this->y * 365 * 24 * 60 * 60) +
+        ($this->m * 30 * 24 * 60 * 60) +
+        ($this->d * 24 * 60 * 60) +
+        ($this->h * 60 * 60) +
+        ($this->i * 60) +
+        $this->s;
+    }
+
+}

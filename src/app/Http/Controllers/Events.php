@@ -60,6 +60,7 @@ class Events extends Controller
         $occurrences = array_count_values($employeeIds);
 
         $sets = [];
+        $endOfDay = new \DateTime($dayBoundaries['end'],new \DateTimeZone('Europe/Athens'));
         foreach ($allEvents as $index => $event) {
             if ($event->direction == $employeeRecords[$event->pxt_user_id]['expect']) {
                 $employeeRecords[$event->pxt_user_id]['expect'] ^= $toggleSwitch;
@@ -78,14 +79,31 @@ class Events extends Controller
                 elseif ($event->direction == 2 && ($employeeRecords[$event->pxt_user_id]['index'] == $occurrences[$event->pxt_user_id] - 1) )
                 {
                     $now = new \DateTime('',new \DateTimeZone('Europe/Athens'));
-                    $span = array(
-                        'id' => $event->id,
-                        'resourceId' => $event->pxt_user_id,
-                        'start' => $event->event_time,
-                        'end'   => $now->format('Y-m-d H:i:s'),
-                        'title' => "",
-                        'addDay' => ""
-                    );
+                    // if this is not viewed the same day there is an error here (the guy never exited)
+                    // else use as end the current time
+                    if ($now->getTimestamp() > $endOfDay->getTimestamp())
+                    {
+                        $now = $endOfDay;
+                        $span = array(
+                            'id' => $event->id,
+                            'resourceId' => $event->pxt_user_id,
+                            'start' => $event->event_time,
+                            'end'   => $now->format('Y-m-d H:i:s'),
+                            'title' => "",
+                            'addDay' => "",
+                            'imageurl' => "img/sign_warning.png",
+                            'fake'  => "end"
+                        );
+                    } else {
+                        $span = array(
+                            'id' => $event->id,
+                            'resourceId' => $event->pxt_user_id,
+                            'start' => $event->event_time,
+                            'end'   => $now->format('Y-m-d H:i:s'),
+                            'title' => "",
+                            'addDay' => ""
+                        );
+                    }
                     array_push($sets,$span);
                     $employeeRecords[$event->pxt_user_id]['error'] = false;
                 }

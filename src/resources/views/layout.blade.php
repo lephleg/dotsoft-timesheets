@@ -95,6 +95,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- AdminLTE App -->
 <script src="{{ asset ("adminlte/dist/js/app.min.js") }}" type="text/javascript"></script>
 <script src="{{ asset ("js/custom.js") }}" type="text/javascript"></script>
+<script src="{{ asset ("js/month.js") }}" type="text/javascript"></script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
       Both of these plugins are recommended to enhance the
