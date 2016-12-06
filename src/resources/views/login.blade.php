@@ -27,7 +27,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="/" class="logo"><img src="{{ asset("img/timesheets-logo.png") }}" alt="DOTSOFT Timesheets v2"></a>
+        <a href="/" class="logo"><img src="{{ asset("img/timesheets-logo-remastered.png") }}" alt="DOTSOFT Timesheets v2"></a>
     </div>
 
     <!-- Logo -->
