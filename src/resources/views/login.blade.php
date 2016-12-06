@@ -50,7 +50,7 @@
             <div class="col-xs-8">
                 <div class="checkbox icheck">
                     <label>
-                        <input type="checkbox"> Remember Me
+                        {{ Form::checkbox('remember_me',1,true) }} Remember Me
                     </label>
                 </div>
             </div>

@@ -77,8 +77,10 @@ class LoginController extends Controller
                 'password'  => Input::get('password')
             );
 
+            $rememberMe = Input::get('remember_me') ? Input::get('remember_me') : null;
+
             // attempt to do the login
-            if (Auth::attempt($userdata)) {
+            if (Auth::attempt($userdata, $rememberMe)) {
 
                 // validation successful!
                 // redirect them to the secure section
