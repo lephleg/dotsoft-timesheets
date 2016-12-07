@@ -38,9 +38,13 @@ class DailyLookup extends Model {
      */
     protected $table = 'daily_lookup';
 
-    public static function store($date) {
+    public static function store($date = null) {
 
-        $date = \DateTime::createFromFormat('Y-m-d', $date);
+        if (is_null($date)) {
+            $date = new \DateTime('', new \DateTimeZone('Europe/Athens'));
+        } else {
+            $date = \DateTime::createFromFormat('Y-m-d', $date);
+        }
 
         $employees = Employee::where('department', 'DOTSOFT')
             ->orderBy('last_name', 'ASC')
@@ -65,6 +69,7 @@ class DailyLookup extends Model {
             $daily->save();
 
         }
+        return;
     }
 
     public static function storeMonth($month, $year)

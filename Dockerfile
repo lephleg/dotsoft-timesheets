@@ -2,7 +2,7 @@
 FROM ubuntu:14.04
 
 # Install packages
-RUN apt-get update && apt-get install -y git nano unzip apache2 software-properties-common wget curl htop git bzip2 openssh-client
+RUN apt-get update && apt-get install -y git nano unzip apache2 software-properties-common wget curl htop git bzip2 openssh-client cron
 
 # Install PHP
 RUN add-apt-repository ppa:ondrej/php
@@ -34,6 +34,11 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Add config .ENV
 ADD resources/.env /tmp/resources/.env
+
+# Set up cron
+ADD resources/crontab /var/spool/cron/crontabs/www-data
+RUN chown www-data.crontab /var/spool/cron/crontabs/www-data
+RUN chmod 0600 /var/spool/cron/crontabs/www-data
 
 # Install supervisor
 RUN apt-get install -y supervisor

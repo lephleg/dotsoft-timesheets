@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\DailyLookup;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -24,8 +25,19 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->call(function(){
+
+            // Generate yesterday's date
+            $date = new \DateTime('', new \DateTimeZone('Europe/Athens'));
+            $date->sub(new \DateInterval('P1D'));
+            $yesterday = $date->format('Y-m-d');
+
+            // Trigger and log the calculation
+            \Log::notice('Daily average time calculation has started. Please wait..');
+            DailyLookup::store($yesterday);
+            \Log::info('Daily average time calculation has been completed!');
+
+        })->dailyAt('02:05');
     }
 
     /**
