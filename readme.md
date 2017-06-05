@@ -1,6 +1,8 @@
 # DOTSOFT Timesheets v2
+![logo](src/public/img/timesheets-logo-remastered.png)
+#### based on Paxton's Net2Access Control SDK & Laravel v5.3
 
-[Timesheets v1](http://version.ds.dotsoft.gr:8080/timesheet/) | [Timesheets v2](http://timesheets.staging.dotsoft.gr)
+[Timesheets v1 (legacy)](http://version.ds.dotsoft.gr:8080/timesheet/) | [Timesheets v2](http://timesheets.staging.dotsoft.gr)
 
 ---
 
