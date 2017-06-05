@@ -4,9 +4,11 @@
 
 [Timesheets v1 (legacy)](http://version.ds.dotsoft.gr:8080/timesheet/) | [Timesheets v2](http://timesheets.staging.dotsoft.gr)
 
+![dashboard-screenshot](timesheets-dashboard.png)
+
 ---
 
-### **Instructions**
+### **Build Instructions**
 
 **Prerequisites:** Docker Compose has to be installed on your machine. ([Install Docker Compose](https://docs.docker.com/compose/install/))
 
